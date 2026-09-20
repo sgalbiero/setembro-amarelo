@@ -650,8 +650,11 @@ a:focus-visible {
   }
 
   .frame--welcome h2 {
+    position: relative;
     grid-column: 2;
     align-self: end;
+    justify-self: start;
+    inset-inline-start: -.55rem;
     margin: 0;
     font-size: clamp(5rem, 6.2vw, 7.25rem);
     text-align: left;
