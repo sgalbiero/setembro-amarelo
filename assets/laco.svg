@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
+  <title>Laço amarelo</title>
+  <g id="laco-classico">
+    <path fill="#e2a500" fill-rule="evenodd" d="M120 36C72 36 54 74 76 111L100 151L47 244H88L120 188L153 244H194L140 151L166 110C188 74 166 36 120 36ZM120 66C143 66 151 82 140 101L120 133L100 100C90 82 98 66 120 66Z"/>
+    <path fill="none" stroke="#a97000" stroke-width="3.5" stroke-linecap="round" opacity=".68" d="M100 151L112 128M120 188L140 151"/>
+  </g>
+</svg>

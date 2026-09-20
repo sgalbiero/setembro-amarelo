@@ -1,0 +1,167 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 900">
+  <title>Ipê-amarelo florido</title>
+  <defs>
+    <linearGradient id="trunk-tone" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3d2924"/>
+      <stop offset=".22" stop-color="#745044"/>
+      <stop offset=".48" stop-color="#a0705d"/>
+      <stop offset=".68" stop-color="#68443a"/>
+      <stop offset="1" stop-color="#33211f"/>
+    </linearGradient>
+    <linearGradient id="bark-light" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#c49a82"/><stop offset="1" stop-color="#755044"/>
+    </linearGradient>
+    <radialGradient id="blossom-a" cx="38%" cy="30%" r="72%">
+      <stop stop-color="#fffbe1"/><stop offset=".38" stop-color="#ffe170"/><stop offset="1" stop-color="#e3a900"/>
+    </radialGradient>
+    <radialGradient id="blossom-b" cx="38%" cy="28%" r="76%">
+      <stop stop-color="#fff7bf"/><stop offset=".42" stop-color="#f5c83e"/><stop offset="1" stop-color="#c98b00"/>
+    </radialGradient>
+    <radialGradient id="blossom-c" cx="40%" cy="30%" r="75%">
+      <stop stop-color="#fff9cd"/><stop offset=".4" stop-color="#f8cf4b"/><stop offset="1" stop-color="#d79a00"/>
+    </radialGradient>
+    <filter id="canopy-shadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#7b5610" flood-opacity=".17"/>
+    </filter>
+    <filter id="trunk-shadow" x="-40%" y="-10%" width="180%" height="130%">
+      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#39251f" flood-opacity=".2"/>
+    </filter>
+
+    <!-- Mantido como símbolo externo para as pétalas que atravessam a cena. -->
+    <path id="ipe-petal" d="M0-12C6-11 10-6 9 0C8 7 4 12 0 16C-4 12-8 7-9 0C-10-6-6-11 0-12Z"/>
+
+    <g id="flower-main">
+      <ellipse cx="0" cy="-4.5" rx="4.8" ry="7" fill="url(#blossom-a)"/>
+      <ellipse cx="4.5" cy="-1" rx="4.8" ry="7" transform="rotate(72 4.5 -1)" fill="url(#blossom-b)"/>
+      <ellipse cx="2.8" cy="4.2" rx="4.6" ry="6.7" transform="rotate(144 2.8 4.2)" fill="url(#blossom-a)"/>
+      <ellipse cx="-2.8" cy="4.2" rx="4.6" ry="6.7" transform="rotate(216 -2.8 4.2)" fill="url(#blossom-c)"/>
+      <ellipse cx="-4.5" cy="-1" rx="4.8" ry="7" transform="rotate(288 -4.5 -1)" fill="url(#blossom-b)"/>
+      <circle r="2" fill="#fff4a3"/><circle r=".8" fill="#8a5b00"/>
+    </g>
+    <g id="flower-light">
+      <circle cx="-3" cy="-2" r="5" fill="#ffe681"/><circle cx="3" cy="-2" r="5" fill="#f6ce4e"/>
+      <circle cx="0" cy="3" r="5.2" fill="#e8b72b"/><circle r="1.4" fill="#fff8c9"/>
+    </g>
+    <g id="leaf-dark">
+      <path d="M0 0C8-8 15-7 19-4C14 2 8 6 0 0Z" fill="#777044"/>
+      <path d="M1 0L15-4" stroke="#aaa06a" stroke-width="1"/>
+    </g>
+
+    <g id="cluster-small">
+      <use href="#flower-main" transform="translate(-18 -7) rotate(-12) scale(.82)"/>
+      <use href="#flower-light" transform="translate(-3 -17) scale(.78)"/>
+      <use href="#flower-main" transform="translate(14 -8) rotate(15) scale(.9)"/>
+      <use href="#flower-light" transform="translate(-10 9) scale(.72)"/>
+      <use href="#flower-main" transform="translate(8 10) rotate(-8) scale(.76)"/>
+    </g>
+    <g id="cluster-medium">
+      <use href="#cluster-small" transform="translate(-19 -10)"/>
+      <use href="#cluster-small" transform="translate(19 -5) rotate(8) scale(.94)"/>
+      <use href="#cluster-small" transform="translate(1 18) scale(.9)"/>
+      <use href="#flower-main" transform="translate(0 -30) scale(.88)"/>
+    </g>
+    <g id="cluster-large">
+      <use href="#cluster-medium" transform="translate(-28 -5)"/>
+      <use href="#cluster-medium" transform="translate(27 -9) scale(.9)"/>
+      <use href="#cluster-medium" transform="translate(0 27) scale(.94)"/>
+    </g>
+  </defs>
+
+  <style>
+    .branch-left,.branch-right,.branch-crown { transform-box: view-box; }
+    .branch-left { transform-origin: 249px 680px; animation: branch-left 6.8s ease-in-out infinite; }
+    .branch-right { transform-origin: 255px 676px; animation: branch-right 7.4s ease-in-out -.9s infinite; }
+    .branch-crown { transform-origin: 252px 615px; animation: branch-crown 8.2s ease-in-out -2.1s infinite; }
+    .bloom-a,.bloom-b,.bloom-c { transform-box: fill-box; transform-origin: center; }
+    .bloom-a { animation: bloom-a 4.9s ease-in-out infinite; }
+    .bloom-b { animation: bloom-b 5.8s ease-in-out -1.7s infinite; }
+    .bloom-c { animation: bloom-c 6.4s ease-in-out -3.2s infinite; }
+    @keyframes branch-left { 0%,100% { transform: rotate(-.35deg); } 48% { transform: rotate(1.15deg); } 72% { transform: rotate(.45deg); } }
+    @keyframes branch-right { 0%,100% { transform: rotate(.3deg); } 45% { transform: rotate(-1.05deg); } 73% { transform: rotate(-.3deg); } }
+    @keyframes branch-crown { 0%,100% { transform: rotate(-.25deg); } 50% { transform: rotate(.72deg); } }
+    @keyframes bloom-a { 0%,100% { transform: translate(0,0) rotate(-.25deg); } 50% { transform: translate(2px,-1px) rotate(.8deg); } }
+    @keyframes bloom-b { 0%,100% { transform: translate(0,0) rotate(.2deg); } 52% { transform: translate(-2px,1px) rotate(-.75deg); } }
+    @keyframes bloom-c { 0%,100% { transform: translate(0,0); } 46% { transform: translate(1.5px,-1px) rotate(.55deg); } }
+    @media (prefers-reduced-motion: reduce) {
+      .branch-left,.branch-right,.branch-crown,.bloom-a,.bloom-b,.bloom-c { animation: none; }
+    }
+  </style>
+
+  <!-- Estrutura lenhosa: tronco robusto, irregular e ramificação ascendente como na referência. -->
+  <g filter="url(#trunk-shadow)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M249 902C246 810 246 732 251 649C257 588 266 524 263 454C261 397 249 347 237 300" stroke="url(#trunk-tone)" stroke-width="29"/>
+    <path d="M251 892C249 775 256 670 266 566C273 518 273 475 266 430" stroke="url(#bark-light)" stroke-width="5" opacity=".7"/>
+    <path d="M241 888C238 775 239 681 246 602" stroke="#3d2824" stroke-width="4" opacity=".55"/>
+  </g>
+
+  <g class="branch-left">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M256 667C213 618 179 567 157 511C137 462 122 410 91 367" stroke="url(#trunk-tone)" stroke-width="17"/>
+      <path d="M188 581C151 552 122 517 104 475C92 446 76 424 52 408" stroke="#67443a" stroke-width="10"/>
+      <path d="M157 511C151 459 134 419 101 387C79 366 61 347 46 319" stroke="#714b3e" stroke-width="8"/>
+      <path d="M125 445C102 415 89 381 88 345C88 320 77 300 59 285" stroke="#7c5444" stroke-width="6"/>
+      <path d="M104 475C72 466 44 446 25 418" stroke="#624039" stroke-width="5"/>
+    </g>
+    <g class="bloom-a" filter="url(#canopy-shadow)">
+      <use href="#cluster-large" transform="translate(73 327) scale(1.02)"/>
+      <use href="#cluster-medium" transform="translate(41 382) scale(.9)"/>
+      <use href="#cluster-large" transform="translate(116 395) scale(.96)"/>
+      <use href="#cluster-medium" transform="translate(79 447) scale(.82)"/>
+      <use href="#cluster-small" transform="translate(25 428) scale(.72)"/>
+    </g>
+  </g>
+
+  <g class="branch-right">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M259 671C302 620 333 568 353 508C369 458 385 413 419 373" stroke="url(#trunk-tone)" stroke-width="16"/>
+      <path d="M329 568C371 543 403 508 425 464C439 436 456 414 480 400" stroke="#67443a" stroke-width="10"/>
+      <path d="M353 508C363 461 381 422 411 391C436 365 453 339 465 309" stroke="#744c40" stroke-width="8"/>
+      <path d="M397 416C420 385 434 349 435 317C436 290 448 272 469 256" stroke="#805748" stroke-width="6"/>
+      <path d="M425 464C458 452 481 431 500 402" stroke="#5d3c35" stroke-width="5"/>
+    </g>
+    <g class="bloom-b" filter="url(#canopy-shadow)">
+      <use href="#cluster-large" transform="translate(445 319) scale(1.02)"/>
+      <use href="#cluster-medium" transform="translate(481 385) scale(.83)"/>
+      <use href="#cluster-large" transform="translate(399 401) scale(.97)"/>
+      <use href="#cluster-medium" transform="translate(443 449) scale(.84)"/>
+      <use href="#cluster-small" transform="translate(498 413) scale(.72)"/>
+    </g>
+  </g>
+
+  <g class="branch-crown">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M260 575C223 529 201 477 197 421C193 374 176 335 146 305" stroke="url(#trunk-tone)" stroke-width="12"/>
+      <path d="M264 557C300 516 323 466 327 411C330 364 348 326 378 294" stroke="url(#trunk-tone)" stroke-width="12"/>
+      <path d="M263 493C244 446 236 395 241 342C245 299 237 263 215 231" stroke="#6c493d" stroke-width="9"/>
+      <path d="M269 481C287 432 294 384 289 335C285 295 294 258 317 227" stroke="#755044" stroke-width="9"/>
+      <path d="M241 342C222 310 206 283 178 263M289 335C310 303 327 278 354 254" stroke="#795144" stroke-width="6"/>
+      <path d="M215 231C213 197 224 166 246 142M317 227C321 194 311 165 291 142" stroke="#7d5547" stroke-width="5"/>
+      <path d="M246 142C250 112 260 88 278 68" stroke="#81594a" stroke-width="4"/>
+    </g>
+    <g class="bloom-c" filter="url(#canopy-shadow)">
+      <use href="#cluster-large" transform="translate(152 285) scale(1.05)"/>
+      <use href="#cluster-large" transform="translate(213 241) scale(1.06)"/>
+      <use href="#cluster-large" transform="translate(285 236) scale(1.08)"/>
+      <use href="#cluster-large" transform="translate(358 278) scale(1.04)"/>
+      <use href="#cluster-large" transform="translate(250 319) scale(1.15)"/>
+      <use href="#cluster-medium" transform="translate(185 355) scale(.98)"/>
+      <use href="#cluster-medium" transform="translate(326 352) scale(.98)"/>
+      <use href="#cluster-medium" transform="translate(188 205) scale(.92)"/>
+      <use href="#cluster-large" transform="translate(255 168) scale(1.03)"/>
+      <use href="#cluster-medium" transform="translate(325 201) scale(.96)"/>
+      <use href="#cluster-medium" transform="translate(278 103) scale(.9)"/>
+      <use href="#cluster-small" transform="translate(229 91) scale(.72)"/>
+      <use href="#cluster-small" transform="translate(322 126) scale(.74)"/>
+    </g>
+  </g>
+
+  <!-- Alguns vazios e folhas escuras evitam uma copa chapada e reforçam o aspecto orgânico. -->
+  <g opacity=".72">
+    <use href="#leaf-dark" x="118" y="371" transform="rotate(-35 118 371) scale(.72)"/>
+    <use href="#leaf-dark" x="175" y="303" transform="rotate(-62 175 303) scale(.58)"/>
+    <use href="#leaf-dark" x="335" y="302" transform="rotate(205 335 302) scale(.62)"/>
+    <use href="#leaf-dark" x="400" y="377" transform="rotate(218 400 377) scale(.68)"/>
+    <use href="#leaf-dark" x="246" y="208" transform="rotate(-75 246 208) scale(.5)"/>
+    <use href="#leaf-dark" x="298" y="184" transform="rotate(210 298 184) scale(.48)"/>
+  </g>
+</svg>
