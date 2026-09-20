@@ -97,11 +97,14 @@ try {
   await wait(800);
   await screenshot(client, mobile.sessionId, "quadro-1-mobile.png");
 
-  await wait(3300);
+  // Wait for the automatic transition and for the full ribbon/copy sequence.
+  // Documentation screenshots should show the completed frame, not an
+  // intermediate animation state.
+  await wait(5200);
   await screenshot(client, mobile.sessionId, "quadro-2-mobile.png");
 
   await evaluate(client, mobile.sessionId, "document.querySelector('.advance-control').click(); true");
-  await wait(900);
+  await wait(1600);
   await screenshot(client, mobile.sessionId, "quadro-3-mobile.png");
 
   const touchResult = await evaluate(client, mobile.sessionId, `(() => {
@@ -130,7 +133,7 @@ try {
   await navigate(client, tallMobile.sessionId);
   await wait(4100);
   await evaluate(client, tallMobile.sessionId, "document.querySelector('.advance-control').click(); true");
-  await wait(900);
+  await wait(1600);
   const tallMobileHopeLayout = await evaluate(client, tallMobile.sessionId, `(() => {
     const heading = document.querySelector('#quadro-3 h2');
     const rect = heading.getBoundingClientRect();
