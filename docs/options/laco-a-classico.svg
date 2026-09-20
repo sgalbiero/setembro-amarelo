@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 300">
+  <title>Opção A — fita clássica</title>
+  <path fill="#e5aa08" fill-rule="evenodd" d="M120 22C76 22 59 59 78 97L101 139L52 258H86L120 176L158 258H192L139 139L165 96C184 58 163 22 120 22ZM120 51C142 51 151 67 141 87L120 124L99 86C90 67 99 51 120 51Z"/>
+  <path fill="#bd8000" d="m101 139 19 37 19-37-12-21h-15Z" opacity=".82"/>
+</svg>

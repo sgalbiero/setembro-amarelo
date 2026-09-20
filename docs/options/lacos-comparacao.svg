@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420">
+  <rect width="960" height="420" rx="30" fill="#f7f4ec"/>
+  <g font-family="Arial, sans-serif" text-anchor="middle" fill="#3b2925">
+    <g transform="translate(65 38)">
+      <rect width="250" height="340" rx="24" fill="#fffdf7" stroke="#3b2925" stroke-opacity=".12"/>
+      <g transform="translate(48 25) scale(.64)">
+        <path fill="#e5aa08" fill-rule="evenodd" d="M120 22C76 22 59 59 78 97L101 139L52 258H86L120 176L158 258H192L139 139L165 96C184 58 163 22 120 22ZM120 51C142 51 151 67 141 87L120 124L99 86C90 67 99 51 120 51Z"/>
+        <path fill="#bd8000" d="m101 139 19 37 19-37-12-21h-15Z" opacity=".82"/>
+      </g>
+      <text x="125" y="276" font-size="22" font-weight="700">A · Clássica</text>
+      <text x="125" y="308" font-size="15" fill="#67534d">simétrica e direta</text>
+    </g>
+    <g transform="translate(355 38)">
+      <rect width="250" height="340" rx="24" fill="#fffdf7" stroke="#3b2925" stroke-opacity=".12"/>
+      <g transform="translate(48 25) scale(.64)">
+        <path fill="#e5aa08" d="M119 24C83 24 66 54 79 86L102 137L52 258H86L120 176L153 258H189L137 137L162 88C180 52 157 24 119 24Zm1 28c17 0 25 14 17 30l-18 37-17-37c-8-17 0-30 18-30Z"/>
+        <path fill="#bf8200" d="m102 137 18 39 17-39-10-22h-15Z"/>
+        <path fill="#f3c641" d="M120 52c17 0 25 14 17 30l-5 10c4-18-4-29-23-32 3-5 6-8 11-8Z" opacity=".72"/>
+      </g>
+      <text x="125" y="276" font-size="22" font-weight="700">B · Dobrada</text>
+      <text x="125" y="308" font-size="15" fill="#67534d">volume e dobra marcada</text>
+    </g>
+    <g transform="translate(645 38)">
+      <rect width="250" height="340" rx="24" fill="#fffdf7" stroke="#3b2925" stroke-opacity=".12"/>
+      <g transform="translate(48 25) scale(.64)">
+        <path fill="#e5aa08" d="M111 23C78 28 68 58 79 88c8 23 23 42 39 61L66 258h34l39-84 35 84h34l-50-111c17-23 31-47 32-72 1-34-33-58-79-52Zm12 29c23-3 39 8 38 25-1 16-12 36-26 54-15-18-27-35-30-52-3-15 4-25 18-27Z"/>
+        <path fill="#bd8000" d="m118 149 21 25 19-27-14-28Z" opacity=".85"/>
+        <path fill="#f3c641" d="M123 52c23-3 39 8 38 25 0 5-2 11-5 18 1-22-13-34-42-34 2-5 5-8 9-9Z" opacity=".78"/>
+      </g>
+      <text x="125" y="276" font-size="22" font-weight="700">C · Orgânica</text>
+      <text x="125" y="308" font-size="15" fill="#67534d">mais fluida e artesanal</text>
+    </g>
+  </g>
+</svg>
