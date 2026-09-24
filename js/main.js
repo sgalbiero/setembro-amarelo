@@ -1,174 +1,96 @@
-import { finishFrame, motionPreference, playFrame, stopFrame } from "./animations.js";
+import { motionPreference, playFrame, stopFrame } from './animations.js';
 
 const root = document.documentElement;
-const experience = document.querySelector(".experience");
-const frames = [...document.querySelectorAll("[data-frame]")];
-const frameByNumber = new Map(frames.map((frame) => [Number(frame.dataset.frame), frame]));
-const advanceControl = document.querySelector(".advance-control");
+const frames = [...document.querySelectorAll('[data-frame]')];
+const screenMode = new URLSearchParams(location.search).get('modo') === 'tela';
+const durations = [1500, 8000, 12000, 8000];
+const entranceDurations = [1000, 2800, 1400, 900];
+const toggle = document.querySelector('[data-play]');
+const status = document.querySelector('[data-status]');
+let current = 0;
+let playing = screenMode;
+let temporaryPause = false;
+let advanceTimer;
+let idleTimer;
+let transitioning = false;
+let keyboardFocus = false;
 
-root.classList.add("js-ready");
-if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-
-let activeNumber = 1;
-let navigationInProgress = false;
-let suppressAdvanceClickUntil = 0;
-
-function preferredBehavior() {
-  return motionPreference.matches ? "auto" : "smooth";
+root.classList.add('js-ready', 'slideshow');
+root.classList.toggle('screen-mode', screenMode);
+function schedule() {
+  clearTimeout(advanceTimer);
+  const playbackLabel = playing ? 'Pausar' : 'Reproduzir';
+  toggle.setAttribute('aria-label', playbackLabel);
+  toggle.title = playbackLabel;
+  toggle.classList.toggle('is-playing', playing);
+  status.textContent = `${current + 1} / ${frames.length} · ${playing && !keyboardFocus ? 'Em reprodução' : 'Pausado'}`;
+  root.classList.toggle('playback-paused', !playing || document.hidden || keyboardFocus);
+  if (!playing || document.hidden || keyboardFocus) return;
+  advanceTimer = setTimeout(() => show(current + 1), durations[current] + (motionPreference.matches ? 0 : entranceDurations[current]));
 }
-
-function updateIntroLock(number) {
-  root.classList.toggle("intro-locked", number === 1 && !motionPreference.matches);
+function show(index) {
+  if (transitioning) return;
+  const next = (index + frames.length) % frames.length;
+  if (next === current) return;
+  const previous = frames[current];
+  const target = frames[next];
+  if (previous.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+  previous.inert = true;
+  previous.setAttribute('aria-hidden', 'true');
+  previous.classList.add('is-leaving');
+  current = next;
+  target.inert = false;
+  target.removeAttribute('aria-hidden');
+  target.scrollTop = 0;
+  playFrame(target);
+  transitioning = true;
+  setTimeout(() => {
+    stopFrame(previous);
+    previous.classList.remove('is-leaving');
+    transitioning = false;
+  }, motionPreference.matches ? 0 : 900);
+  schedule();
 }
-
-function activateFrame(number, restart = true) {
-  const nextFrame = frameByNumber.get(number);
-  if (!nextFrame) return;
-
-  frames.forEach((frame) => {
-    if (frame !== nextFrame) stopFrame(frame);
-  });
-
-  activeNumber = number;
-  updateIntroLock(number);
-
-  if (restart) {
-    playFrame(nextFrame, {
-      onIntroComplete: () => navigateTo(2),
-    });
-  } else {
-    nextFrame.classList.add("is-active");
+function interaction() {
+  clearTimeout(idleTimer);
+  if (playing) { temporaryPause = true; playing = false; }
+  if (temporaryPause && screenMode) {
+    idleTimer = setTimeout(() => {
+      if (keyboardFocus) return;
+      temporaryPause = false;
+      playing = true;
+      schedule();
+    }, 60000);
   }
+  schedule();
 }
-
-function navigateTo(number, behavior = preferredBehavior()) {
-  const nextFrame = frameByNumber.get(number);
-  if (!nextFrame) return;
-
-  navigationInProgress = true;
-  activateFrame(number, true);
-  experience.scrollTo({ top: nextFrame.offsetTop, behavior });
-  window.setTimeout(() => {
-    navigationInProgress = false;
-  }, behavior === "smooth" ? 650 : 0);
-}
-
-frames.forEach((frame) => {
-  frame.addEventListener("click", (event) => {
-    if (event.target.closest("a, button, input, select, textarea, [role='button']")) return;
-
-    const number = Number(frame.dataset.frame);
-    if (number === 1) {
-      finishFrame(frame);
-      navigateTo(2);
-      return;
-    }
-
-    finishFrame(frame);
-  });
+document.querySelector('[data-prev]').addEventListener('click', () => { interaction(); show(current - 1); });
+document.querySelector('[data-next]').addEventListener('click', () => { interaction(); show(current + 1); });
+toggle.addEventListener('click', () => {
+  clearTimeout(idleTimer);
+  temporaryPause = false;
+  keyboardFocus = false;
+  playing = !playing;
+  schedule();
 });
-
-document.querySelectorAll("[data-go]").forEach((control) => {
-  if (control === advanceControl) return;
-
-  control.addEventListener("click", (event) => {
-    event.preventDefault();
-    navigateTo(Number(control.dataset.go));
-  });
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Tab') { keyboardFocus = true; schedule(); }
 });
-
-advanceControl.addEventListener("click", (event) => {
-  event.preventDefault();
-  if (performance.now() < suppressAdvanceClickUntil) return;
-  navigateTo(3);
+document.addEventListener('pointerdown', () => {
+  if (keyboardFocus) { keyboardFocus = false; schedule(); }
 });
-
-advanceControl.addEventListener("keydown", (event) => {
-  if (event.key !== " ") return;
-  event.preventDefault();
-  navigateTo(3);
-});
-
-let dragStartY = 0;
-let dragPointerId = null;
-let dragDistance = 0;
-
-advanceControl.addEventListener("pointerdown", (event) => {
-  dragPointerId = event.pointerId;
-  dragStartY = event.clientY;
-  dragDistance = 0;
-  advanceControl.classList.add("is-dragging");
-  advanceControl.setPointerCapture(event.pointerId);
-});
-
-advanceControl.addEventListener("pointermove", (event) => {
-  if (event.pointerId !== dragPointerId) return;
-
-  dragDistance = Math.min(0, Math.max(-52, event.clientY - dragStartY));
-  advanceControl.style.setProperty("--drag-y", `${dragDistance}px`);
-
-  if (dragDistance <= -30) {
-    suppressAdvanceClickUntil = performance.now() + 600;
-    dragPointerId = null;
-    advanceControl.classList.remove("is-dragging");
-    advanceControl.style.removeProperty("--drag-y");
-    navigateTo(3);
+document.addEventListener('focusout', () => setTimeout(() => {
+  if (document.activeElement === document.body) {
+    keyboardFocus = false;
+    if (temporaryPause) interaction(); else schedule();
   }
+}, 0));
+// Only deliberate navigation pauses playback; touching the illustration does not.
+document.addEventListener('visibilitychange', schedule);
+motionPreference.addEventListener('change', () => { playFrame(frames[current]); schedule(); });
+frames.forEach((frame, index) => {
+  frame.inert = index !== 0;
+  if (index !== 0) frame.setAttribute('aria-hidden', 'true');
 });
-
-function releaseDrag(event) {
-  if (event.pointerId !== dragPointerId) return;
-  const releaseDistance = Math.min(dragDistance, event.clientY - dragStartY);
-  dragPointerId = null;
-  advanceControl.classList.remove("is-dragging");
-  advanceControl.style.removeProperty("--drag-y");
-
-  // Some browsers coalesce pointermove events during a quick flick. Checking
-  // the release point keeps the 30 px gesture reliable in that case too.
-  if (releaseDistance <= -30) {
-    suppressAdvanceClickUntil = performance.now() + 600;
-    navigateTo(3);
-  }
-}
-
-advanceControl.addEventListener("pointerup", releaseDrag);
-advanceControl.addEventListener("pointercancel", releaseDrag);
-
-const observer = new IntersectionObserver(
-  (entries) => {
-    if (navigationInProgress || root.classList.contains("intro-locked")) return;
-
-    const visible = entries
-      .filter((entry) => entry.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (!visible || visible.intersectionRatio < 0.62) return;
-
-    const number = Number(visible.target.dataset.frame);
-    if (number !== activeNumber) {
-      // The first frame locks scrolling while its intro plays. When it becomes
-      // visible during a manual upward scroll, align it before enabling that
-      // lock; otherwise the page can be frozen between frames 1 and 2.
-      if (number === 1) {
-        experience.scrollTo({ top: visible.target.offsetTop, behavior: "auto" });
-      }
-
-      activateFrame(number, true);
-    }
-  },
-  { root: experience, threshold: [0.62, 0.75] },
-);
-
-frames.forEach((frame) => observer.observe(frame));
-
-motionPreference.addEventListener("change", () => {
-  if (motionPreference.matches && activeNumber === 1) {
-    finishFrame(frameByNumber.get(1));
-    navigateTo(2, "auto");
-    return;
-  }
-
-  activateFrame(activeNumber, true);
-});
-
-experience.scrollTo({ top: 0, behavior: "auto" });
-activateFrame(1, true);
+playFrame(frames[0]);
+schedule();

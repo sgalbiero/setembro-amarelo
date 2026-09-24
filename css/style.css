@@ -162,7 +162,6 @@ a:focus-visible {
   stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
 }
 
 .js-ready .frame--hello .hello {
@@ -375,7 +374,8 @@ a:focus-visible {
   transform: translate3d(var(--startX), -10%, 0) scale(var(--scale)) rotate(15deg);
 }
 
-.frame--hope.is-active .falling-leaf {
+.frame--hope.is-active .falling-leaf,
+.frame--support.is-active .falling-leaf {
   animation: leaf-fall var(--duration) linear var(--delay) infinite;
 }
 
@@ -536,6 +536,7 @@ a:focus-visible {
   100% {
     opacity: 1;
     stroke-dashoffset: 0;
+    stroke-dasharray: none;
     stroke-width: 6;
   }
 }
@@ -743,3 +744,96 @@ a:focus-visible {
   .ribbon__weave { stroke: CanvasText; opacity: .65; }
   .support-links a, .advance-control, .academic-footer a { border: 2px solid ButtonText; }
 }
+
+/* Presentation: a single stage with independent, scrollable reading frames. */
+.persistent-footer { position: fixed; bottom: 0; inset-inline: 0; z-index: 40; padding: .5rem 1rem max(.5rem, env(safe-area-inset-bottom)); background: rgb(247 244 236 / 80%); }
+.persistent-footer .support-links { position: static; padding: 0; }
+.player-controls { position: relative; display: none; align-items: center; justify-content: center; gap: .45rem; margin-top: .35rem; }
+.js-ready .player-controls { display: flex; flex-wrap: wrap; }
+.player-controls button { min-height: 44px; min-width: 44px; padding: .45rem .8rem; border: 1px solid rgb(59 41 37 / 25%); border-radius: 2rem; background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; }
+button:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+[data-status] { position: absolute; right: 0; font-size: .75rem; color: var(--ink-muted); min-width: 8rem; text-align: right; }
+.slideshow .experience { position: relative; overflow: hidden; scroll-snap-type: none; }
+.slideshow .frame { position: absolute; inset: 0; height: 100%; min-height: 0; overflow-y: auto; visibility: hidden; opacity: 0; pointer-events: none; background: var(--paper); padding-bottom: 9rem; }
+.slideshow .frame.is-active { visibility: visible; opacity: 1; pointer-events: auto; z-index: 2; animation: stage-in .9s ease both; }
+.slideshow .frame.is-leaving { z-index: 3; pointer-events: none; animation: stage-out .9s ease both; }
+.slideshow .frame__content--center { align-content: center; gap: 2rem; padding-bottom: 0; }
+.campaign-intro { font-size: clamp(.95rem, 1.8vw, 1.6rem); color: var(--ink-muted); text-align: center; }
+.slideshow .frame--hello.is-active .hello { opacity: 1; animation: none; }
+.slideshow .frame__content--welcome { padding-bottom: 1rem; }
+.slideshow .frame--welcome.is-active .ribbon { animation: ribbon-slide 1.4s cubic-bezier(.22,.78,.28,1) both; }
+.slideshow .frame--hope.is-active .ipe-tree { animation: ipe-slide 1.4s cubic-bezier(.22,.78,.28,1) both; }
+.slideshow .frame--welcome.is-leaving .ribbon { animation: vector-exit .9s ease both; }
+.slideshow .frame--hope.is-leaving .ipe-scene { animation: vector-exit .9s ease both; }
+.slideshow .academic-footer { bottom: 9rem; }
+.screen-mode .academic-footer a { display: none; }
+.screen-mode .academic-footer { grid-template-areas: 'logo' 'year'; grid-template-columns: auto; }
+.frame__content--support { display: grid; align-content: center; justify-items: center; text-align: center; gap: 1rem; }
+.eyebrow { color: var(--ink-muted); text-transform: uppercase; letter-spacing: .14em; font-size: .85rem; margin: 0; }
+.frame--support h2 { font-size: clamp(3.2rem, 7vw, 7rem); line-height: .95; }
+.support-copy { font-size: clamp(1rem, 1.6vw, 1.6rem); margin: 0; max-width: 35rem; }
+.support-details { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem 3rem; }
+.support-details p { display: grid; gap: .4rem; margin: .5rem 0; }
+.support-details strong { font-size: clamp(1.5rem, 3vw, 2.8rem); }
+.support-details span { color: var(--ink-muted); }
+.closing-logo { width: 9rem; height: auto; margin-top: .5rem; }
+.playback-paused .falling-leaf { animation-play-state: paused; }
+@keyframes stage-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes stage-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes ribbon-slide { from { transform: translateX(-65vw) rotate(-8deg); opacity: 0; } to { transform: translateX(0) rotate(0); opacity: 1; } }
+@keyframes ipe-slide { from { transform: translateX(70vw); opacity: 0; } to { transform: translateX(0); opacity: .94; } }
+@keyframes vector-exit { to { transform: translateX(-70vw); opacity: 0; } }
+@media (min-width: 64rem) {
+  .screen-mode .support-global a { min-width: 9rem; height: 44px; font-size: 1.25rem; }
+  .screen-mode .support-global span { font-size: 1rem; }
+  .screen-mode .welcome-note { font-size: clamp(1.3rem, 2vw, 2rem); }
+}
+@media (max-height: 550px) {
+  .slideshow .frame__content { min-height: 25rem; }
+  .slideshow .frame--hope { padding-bottom: 15rem; }
+  .slideshow .academic-footer { position: relative; bottom: auto; padding-top: 2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .slideshow .frame.is-leaving { visibility: hidden; }
+  .slideshow .ribbon, .slideshow .ipe-tree { transform: none !important; }
+}
+html:not(.js-ready) .frame { padding-bottom: 7rem; }
+
+.persistent-footer .support-global a { height: 44px; }
+@media (max-width: 35rem) {
+  .player-controls { padding-bottom: 1.3rem; }
+  [data-status] { bottom: 0; }
+}
+
+/* Quiet playback controls retain full touch targets and visible keyboard focus. */
+.player-controls button {
+  width: 44px;
+  padding: .65rem;
+  border-color: transparent;
+  background: transparent;
+  opacity: .58;
+  transition: opacity .2s ease, background-color .2s ease;
+}
+.player-controls button:hover,
+.player-controls button:focus-visible { opacity: 1; background: rgb(247 244 236 / 65%); }
+.player-controls svg { display: block; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pause-icon, .is-playing .play-icon { display: none; }
+.is-playing .pause-icon { display: block; }
+
+@media (min-width: 64rem) and (min-height: 36rem) {
+  .slideshow .hello { width: clamp(28rem, 42vw, 52rem); }
+  .slideshow .campaign-intro { font-size: clamp(1.4rem, 2.2vw, 2.6rem); }
+  .slideshow .frame__content--welcome {
+    width: min(92vw, 108rem);
+    grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+    column-gap: 4vw;
+    padding-inline: 0;
+  }
+  .slideshow .ribbon { width: min(28vw, 45vh, 34rem); }
+  .slideshow .frame--welcome h2 { font-size: clamp(5.5rem, 8.4vw, 11rem); }
+  .slideshow .welcome-note { font-size: clamp(1.25rem, 2vw, 2.4rem); }
+  .slideshow .frame__content--hope { width: min(90vw, 110rem); }
+  .slideshow .frame--hope h2 { width: min(69vw, 86rem); font-size: clamp(5.5rem, 8.3vw, 11rem); }
+}
+
+.frame--support > .falling-leaves { z-index: -1; pointer-events: none; }
