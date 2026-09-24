@@ -20,12 +20,6 @@
     <radialGradient id="blossom-c" cx="40%" cy="30%" r="75%">
       <stop stop-color="#fff9cd"/><stop offset=".4" stop-color="#f8cf4b"/><stop offset="1" stop-color="#d79a00"/>
     </radialGradient>
-    <filter id="canopy-shadow" x="-30%" y="-30%" width="160%" height="170%">
-      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#7b5610" flood-opacity=".17"/>
-    </filter>
-    <filter id="trunk-shadow" x="-40%" y="-10%" width="180%" height="130%">
-      <feDropShadow dx="3" dy="4" stdDeviation="3" flood-color="#39251f" flood-opacity=".2"/>
-    </filter>
 
     <!-- Mantido como símbolo externo para as pétalas que atravessam a cena. -->
     <path id="ipe-petal" d="M0-12C6-11 10-6 9 0C8 7 4 12 0 16C-4 12-8 7-9 0C-10-6-6-11 0-12Z"/>
@@ -88,7 +82,7 @@
   </style>
 
   <!-- Estrutura lenhosa: tronco robusto, irregular e ramificação ascendente como na referência. -->
-  <g filter="url(#trunk-shadow)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
     <path d="M249 902C246 810 246 732 251 649C257 588 266 524 263 454C261 397 249 347 237 300" stroke="url(#trunk-tone)" stroke-width="29"/>
     <path d="M251 892C249 775 256 670 266 566C273 518 273 475 266 430" stroke="url(#bark-light)" stroke-width="5" opacity=".7"/>
     <path d="M241 888C238 775 239 681 246 602" stroke="#3d2824" stroke-width="4" opacity=".55"/>
@@ -102,7 +96,7 @@
       <path d="M125 445C102 415 89 381 88 345C88 320 77 300 59 285" stroke="#7c5444" stroke-width="6"/>
       <path d="M104 475C72 466 44 446 25 418" stroke="#624039" stroke-width="5"/>
     </g>
-    <g class="bloom-a" filter="url(#canopy-shadow)">
+    <g class="bloom-a">
       <use href="#cluster-large" transform="translate(73 327) scale(1.02)"/>
       <use href="#cluster-medium" transform="translate(41 382) scale(.9)"/>
       <use href="#cluster-large" transform="translate(116 395) scale(.96)"/>
@@ -119,7 +113,7 @@
       <path d="M397 416C420 385 434 349 435 317C436 290 448 272 469 256" stroke="#805748" stroke-width="6"/>
       <path d="M425 464C458 452 481 431 500 402" stroke="#5d3c35" stroke-width="5"/>
     </g>
-    <g class="bloom-b" filter="url(#canopy-shadow)">
+    <g class="bloom-b">
       <use href="#cluster-large" transform="translate(445 319) scale(1.02)"/>
       <use href="#cluster-medium" transform="translate(481 385) scale(.83)"/>
       <use href="#cluster-large" transform="translate(399 401) scale(.97)"/>
@@ -138,7 +132,7 @@
       <path d="M215 231C213 197 224 166 246 142M317 227C321 194 311 165 291 142" stroke="#7d5547" stroke-width="5"/>
       <path d="M246 142C250 112 260 88 278 68" stroke="#81594a" stroke-width="4"/>
     </g>
-    <g class="bloom-c" filter="url(#canopy-shadow)">
+    <g class="bloom-c">
       <use href="#cluster-large" transform="translate(152 285) scale(1.05)"/>
       <use href="#cluster-large" transform="translate(213 241) scale(1.06)"/>
       <use href="#cluster-large" transform="translate(285 236) scale(1.08)"/>

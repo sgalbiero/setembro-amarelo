@@ -52,7 +52,8 @@ Os contatos **CVV 188** e **SAMU 192** são links `tel:` fixos no rodapé. A pá
 - Escala ampliada aplicada a partir de 1024 px de largura e 576 px de altura, preservando a composição em telas pequenas ou baixas.
 - Traços completos no SVG do “Olá”, com espessura acompanhando a escala e escrita animada preservada.
 - Traços escuros da sobreposição do laço alinhados à fita.
-- Pétalas animadas nos quadros do ipê e de apoio; a pausa também interrompe sua queda.
+- Pétalas animadas nos quadros do ipê e de apoio; a pausa também interrompe sua queda. O desenho da pétala fica no SVG leve `assets/petala.svg`, separado da árvore.
+- Ipê otimizado para reduzir custo de renderização: sem filtros de sombra desfocada sobre a copa e o tronco, sem filtro CSS sobre a árvore e com camadas de animação apenas nos quadros ativos.
 - Badges de contato com 44 px de altura, controles com ícones discretos e fundo do rodapé com 80% de opacidade.
 - Setas e botão central alinhados ao centro, com indicador de quadro à direita. Em telas estreitas, o indicador ocupa uma linha abaixo para evitar sobreposição.
 - Link do GitHub disponível no quadro do ipê no modo de leitura e oculto no modo telão.

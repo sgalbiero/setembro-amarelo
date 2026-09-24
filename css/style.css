@@ -342,7 +342,8 @@ a:focus-visible {
   height: auto;
   opacity: .94;
   transform-origin: bottom center;
-  filter: saturate(.96) drop-shadow(0 10px 18px rgb(103 72 20 / 9%));
+  /* Keep the complex SVG free of per-frame blur/filter surfaces. */
+  filter: none;
 }
 
 .js-ready .frame--hope:not(.is-active, .is-complete) .ipe-tree,
@@ -369,7 +370,7 @@ a:focus-visible {
   height: 24px;
   overflow: visible;
   fill: var(--yellow-soft);
-  filter: drop-shadow(-1px 1px 0 rgb(176 121 0 / 22%));
+  filter: none;
   opacity: 0;
   transform: translate3d(var(--startX), -10%, 0) scale(var(--scale)) rotate(15deg);
 }
@@ -837,3 +838,12 @@ html:not(.js-ready) .frame { padding-bottom: 7rem; }
 }
 
 .frame--support > .falling-leaves { z-index: -1; pointer-events: none; }
+
+/* Isolate moving artwork from page paint; allocate layers only while visible. */
+.ipe-scene { contain: paint; }
+.frame.is-active .ipe-tree,
+.frame.is-active .falling-leaf { will-change: transform, opacity; }
+.persistent-footer .support-links a { -webkit-backdrop-filter: none; backdrop-filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  .frame.is-active .ipe-tree, .frame.is-active .falling-leaf { will-change: auto; }
+}
