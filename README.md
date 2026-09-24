@@ -14,12 +14,13 @@ python -m http.server 4173
 
 | Modo | Endereço local | Comportamento inicial |
 | --- | --- | --- |
-| Leitura | http://localhost:4173/ | Navegação manual |
+| Padrão | http://localhost:4173/ | Reprodução automática em loop |
+| Leitura | http://localhost:4173/?modo=leitura | Navegação manual |
 | Telão | http://localhost:4173/?modo=tela | Reprodução automática em loop |
 
 Use um servidor HTTP: abrir `index.html` diretamente por `file://` pode impedir o carregamento dos módulos JavaScript. O modo é escolhido pelo parâmetro da URL, não pela largura da tela.
 
-Para preparar as telas da universidade, consulte o [guia de operação](docs/OPERACAO.md). Publicação e geração do QR code ficam com o hospedador. O QR code deve apontar para o endereço de leitura, sem `modo=tela`.
+Para preparar as telas da universidade, consulte o [guia de operação](docs/OPERACAO.md). Publicação e geração do QR code ficam com o hospedador. O endereço padrão já inicia em reprodução. Para oferecer leitura manual pelo QR code, use `?modo=leitura`.
 
 ## Os quatro quadros
 
@@ -39,7 +40,7 @@ As durações ficam nos arrays `durations` e `entranceDurations`, em milissegund
 - As setas permitem ir ao quadro anterior ou seguinte, inclusive entre o último e o primeiro.
 - O botão central alterna entre os ícones de reproduzir e pausar, com nome acessível e dica de texto atualizados.
 - Navegar pelas setas durante a reprodução suspende o avanço. No modo telão, a reprodução pode retornar após 60 segundos sem nova navegação, desde que não esteja suspensa pelo foco de teclado.
-- Uma pausa explícita pelo botão permanece até a pessoa selecionar reproduzir. A versão de leitura não retoma automaticamente após interação.
+- Uma pausa explícita pelo botão permanece até a pessoa selecionar reproduzir. Fora do modo telão, a reprodução não retoma automaticamente após interação.
 - Tocar no texto, no laço ou no ipê não pausa a apresentação.
 - A navegação por `Tab` suspende o avanço. O foco de teclado é tratado para evitar mudanças de quadro durante a interação.
 - Abas ocultas não avançam. Ao voltar a uma aba em reprodução, a contagem do quadro atual reinicia.

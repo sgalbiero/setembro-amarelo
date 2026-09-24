@@ -64,7 +64,7 @@ const check=(condition,label)=>{if(!condition)throw new Error(label);results.pus
 for(const [width,height] of [[1920,1080],[390,844],[320,568],[844,390]]) {
  const {sessionId,targetId}=await createPage(client,{width,height});
  const run=async expression=>(await client.send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true},sessionId)).result.value;
- await client.send('Page.navigate',{url:'http://127.0.0.1:4173/'},sessionId);
+ await client.send('Page.navigate',{url:'http://127.0.0.1:4173/?modo=leitura'},sessionId);
  for (let attempt=0;attempt<40;attempt++) {
   if(await run('document.documentElement.classList.contains("js-ready")')) break;
   await wait(100);
@@ -100,7 +100,7 @@ check(await run('document.querySelector(".frame:not([inert])").dataset.frame!=="
 await client.send('Target.closeTarget',{targetId});
 for (const options of [{javascript:false},{reducedMotion:true}]) {
  const {sessionId,targetId}=await createPage(client,{width:390,height:844,...options});
- await client.send('Page.navigate',{url:'http://127.0.0.1:4173/'},sessionId);
+ await client.send('Page.navigate',{url:'http://127.0.0.1:4173/?modo=leitura'},sessionId);
  await wait(500);
  const result=await client.send('Runtime.evaluate',{expression:options.javascript===false ? 'document.querySelectorAll(".frame").length===4 && !document.documentElement.classList.contains("js-ready")' : 'getComputedStyle(document.querySelector(".falling-leaves")).display==="none" && document.querySelector(".is-active").dataset.frame==="1"',returnByValue:true},sessionId);
  check(result.result.value,options.javascript===false?'no JavaScript fallback':'reduced motion');

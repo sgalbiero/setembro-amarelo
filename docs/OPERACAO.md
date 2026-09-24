@@ -3,12 +3,12 @@
 ## Preparar a exibição
 
 1. Confirmar com o hospedador o endereço publicado e o carregamento dos arquivos de `assets/`, `css/` e `js/`.
-2. Abrir o endereço com `?modo=tela` para iniciar a reprodução automática. Se já houver outros parâmetros, acrescentar `&modo=tela`.
+2. O endereço padrão já inicia em reprodução automática. Usar `?modo=tela` para a composição de telão e retomada após navegação manual. Se já houver outros parâmetros, acrescentar `&modo=tela`.
 3. Ativar a tela cheia pelo navegador ou pela configuração do equipamento. A página não entra em tela cheia automaticamente.
 4. Acompanhar um ciclo completo, de aproximadamente 35,6 segundos, verificando os quatro quadros e o retorno ao “Olá”.
 5. Conferir leitura à distância, rodapé, animações do laço e do ipê e pétalas também no último quadro.
 
-O hospedador prepara o QR code para o endereço padrão, sem o parâmetro do modo telão. Esse endereço abre em leitura manual.
+O endereço padrão inicia em reprodução automática também no GitHub Pages. Para leitura manual, o hospedador pode apontar o QR code para `?modo=leitura`.
 
 ## Controles
 

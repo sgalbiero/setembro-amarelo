@@ -2,13 +2,14 @@ import { motionPreference, playFrame, stopFrame } from './animations.js';
 
 const root = document.documentElement;
 const frames = [...document.querySelectorAll('[data-frame]')];
-const screenMode = new URLSearchParams(location.search).get('modo') === 'tela';
+const mode = new URLSearchParams(location.search).get('modo');
+const screenMode = mode === 'tela';
 const durations = [1500, 8000, 12000, 8000];
 const entranceDurations = [1000, 2800, 1400, 900];
 const toggle = document.querySelector('[data-play]');
 const status = document.querySelector('[data-status]');
 let current = 0;
-let playing = screenMode;
+let playing = mode !== 'leitura';
 let temporaryPause = false;
 let advanceTimer;
 let idleTimer;

@@ -62,7 +62,7 @@ async function createPage(client, { width, height, javascript = true, reducedMot
 const {client,socket}=await connect();
 const {sessionId,targetId}=await createPage(client,{width:1920,height:1080});
 const run=async expression=>(await client.send('Runtime.evaluate',{expression,returnByValue:true},sessionId)).result.value;
-await client.send('Page.navigate',{url:'http://127.0.0.1:4173/'},sessionId);
+await client.send('Page.navigate',{url:'http://127.0.0.1:4173/?modo=leitura'},sessionId);
 await wait(500);
 await run('document.querySelector("[data-next]").click()');
 await wait(3000);

@@ -60,15 +60,17 @@ async function createPage(client, { width, height, javascript = true, reducedMot
 
 
 const {client,socket}=await connect();
-for (const width of [1920,1366]) {
- const {sessionId,targetId}=await createPage(client,{width,height:width===1920?1080:768});
- await client.send('Page.navigate',{url:'http://127.0.0.1:4173/?modo=leitura'},sessionId);
- await wait(1600);
- const {result}=await client.send('Runtime.evaluate',{expression:'[...document.querySelectorAll(".hello-writing path")].every(p=>getComputedStyle(p).strokeDasharray==="none" && getComputedStyle(p).opacity==="1")',returnByValue:true},sessionId);
- if(!result.value) throw Error('Incomplete hello '+width);
- const {data}=await client.send('Page.captureScreenshot',{format:'png'},sessionId);
- await writeFile('docs/screenshots/hello-fixed-'+width+'.png',Buffer.from(data,'base64'));
- console.log('PASS complete strokes '+width);
- await client.send('Target.closeTarget',{targetId});
-}
-socket.close();
+try {
+ for(const [query,label] of [['','Pausar'],['?modo=tela','Pausar'],['?modo=leitura','Reproduzir']]) {
+  const {sessionId,targetId}=await createPage(client,{width:1366,height:768});
+  const run=async expression=>(await client.send('Runtime.evaluate',{expression,returnByValue:true},sessionId)).result.value;
+  await client.send('Page.navigate',{url:'http://127.0.0.1:4173/'+query},sessionId);
+  await wait(700);
+  if(await run('document.querySelector("[data-play]").getAttribute("aria-label")')!==label) throw Error('Startup '+query);
+  await wait(2300);
+  const frame=await run('document.querySelector(".frame:not([inert])").dataset.frame');
+  if(frame!==(label==='Pausar'?'2':'1')) throw Error('Advance '+query);
+  console.log('PASS '+(query||'default')+' startup and advance');
+  await client.send('Target.closeTarget',{targetId});
+ }
+} finally {socket.close();}
